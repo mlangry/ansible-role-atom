@@ -1,0 +1,16 @@
+---
+# tasks file for Debian platforms
+- name: (Debian) Check if atom is installed
+  command: dpkg-query -W atom
+  register: atom_check_deb
+  failed_when: atom_check_deb.rc > 1
+  changed_when: atom_check_deb.rc == 1
+
+- name: (Debian) download atom
+  get_url: url={{atom_deb_url}} dest=/tmp/{{atom_deb}}
+  when: atom_check_deb.rc == 1 or ( atom_check_deb.rc == 0 and "{{atom_ver}}" not in atom_check_deb.stdout )
+
+- name: (Debian) install atom
+  apt: deb='/tmp/{{atom_deb}}' state=present force=yes
+  become: true
+  when: atom_check_deb.rc == 1 or ( atom_check_deb.rc == 0 and "{{atom_ver}}" not in atom_check_deb.stdout )

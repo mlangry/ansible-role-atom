@@ -1,0 +1,16 @@
+---
+# tasks file for Fedora platforms
+- name: (fedora) Check if atom is installed
+  raw: dnf list -Cq --installed atom
+  register: atom_check_rpm
+  failed_when: atom_check_rpm.rc > 1
+  changed_when: atom_check_rpm.rc == 1
+
+- name: (fedora) download atom
+  get_url: url={{atom_rpm_url}} dest=/tmp/{{atom_rpm}}
+  when: atom_check_rpm.rc == 1 or ( atom_check_rpm.rc == 0 and atom_ver not in atom_check_rpm.stdout_lines[1] )
+
+- name: (fedora) install atom
+  dnf: name='/tmp/{{atom_rpm}}' state=present
+  become: true
+  when: atom_check_rpm.rc == 1 or ( atom_check_rpm.rc == 0 and "{{atom_ver}}" not in atom_check_rpm.stdout_lines[1] )

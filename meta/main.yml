@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: mlangry
+  description: your description
+  company: atom role
+  license:
+    - MIT
+  min_ansible_version: 1.9
+  platforms:
+    - name: EL
+    - name: Ubuntu
+    - name: Debian
+
+  galaxy_tags:
+    - development
+
+dependencies: []

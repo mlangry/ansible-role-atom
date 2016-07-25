@@ -2,4 +2,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-role-atom
+    - role: ansible-role-atom
+      atom_packages:
+        - minimap
+        - { name: atom-beautify, state=present }

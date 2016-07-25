@@ -24,6 +24,20 @@ script:
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvv"
 
+  # Test if atom package atom-beautify is installed.
+  - >
+    apm list --installed --bare
+    | grep -q 'atom-beautify'
+    && (echo 'Install package atom-beautify test: pass' && exit 0)
+    || (echo 'Install package atom-beautify test: fail' && exit 1)
+
+    # Test if atom package minimap is installed.
+    - >
+    apm list --installed --bare
+    | grep -q 'minimap'
+    && (echo 'Install package minimap test: pass' && exit 0)
+    || (echo 'Install package minimap test: fail' && exit 1)
+
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
     ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo

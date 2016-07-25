@@ -9,4 +9,6 @@
 - include: RedHat.yml
   when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
 
-#- debug: msg="test"
+- name: Install packages
+  apm: name={{ item.name|default(item) }} state={{ item.state|default('latest') }}
+  with_items: "{{ atom_packages }}"

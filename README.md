@@ -18,6 +18,7 @@ atom_ver : '1.8.0'
 atom_mirror : 'https://github.com/atom/atom/releases/download'
 atom_deb_platform : 'amd64'
 atom_rpm_platform : 'x86_64'
+atom_packages : []
 ````
 
 Dependencies
@@ -28,13 +29,20 @@ None
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
- passed in as parameters) is always nice for users too:
-
 ````yaml
     - hosts: all
       roles:
         - { role: mlangry.atom, atom_ver: 1.7.3 }
+````
+
+
+````yaml
+    - hosts: all
+      roles:
+        - role: mlangry.atom
+          atom_packages:
+            - minimap
+            - { name: atom-beautify, state=present }
 ````
 
 License
